@@ -3,29 +3,16 @@
 #Директории
 dir1=$1
 dir2=$2
-check=0
 
 #Функция синхронизации файлов
 synchron(){
   #Цикл директории, откуда будем брать файлы
-  for file_input in $(ls "$1")
+  for file in $(ls "$1")
   do
-   #Обнуление контролирующей переменной
-   check=0
-   #Цикл директории, куда будем копировать файл
-   for file_output in $(ls "$2")
-   do
-     if [ $file_input = $file_output ]
-     then
-       check=1
-       echo $check
-       break;
-     fi
-   done
-   #Если файла нет, то копируем его во вторую директорию
-   if [ $check = 0 ]
+   #Копирование файла
+   if find "$2" -name $file
    then
-     cp "$1"/"$file_input" "$2"
+     cp "$1"/"$file" "$2"
    fi
   done
 }
